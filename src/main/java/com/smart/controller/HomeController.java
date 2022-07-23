@@ -6,7 +6,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class HomeController {
-    @GetMapping("/home")
+    @GetMapping("/")
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","Smart Contact Manager");
@@ -20,6 +20,14 @@ public class HomeController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","Smart Contact Manager");
         modelAndView.setViewName("about");
+        return modelAndView;
+    }
+
+    @GetMapping("/signup")
+    public ModelAndView signup() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("title","Smart Contact Manager");
+        modelAndView.setViewName("signup");
         return modelAndView;
     }
 }
