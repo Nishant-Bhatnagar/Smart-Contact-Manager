@@ -1,4 +1,5 @@
 package com.smart.model;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +19,8 @@ public class User {
     private String image;
     private String about;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "user")
-    private List<Contact> contacts=new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Contact> contacts = new ArrayList<>();
 
 
     public User() {
@@ -95,5 +96,10 @@ public class User {
 
     public void setContacts(List<Contact> contacts) {
         this.contacts = contacts;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "id=" + id + ", name='" + name + '\'' + ", email='" + email + '\'' + ", role='" + role + '\'' + ", password='" + password + '\'' + ", userActive=" + userActive + ", image='" + image + '\'' + ", about='" + about + '\'' + ", contacts=" + contacts + '}';
     }
 }
