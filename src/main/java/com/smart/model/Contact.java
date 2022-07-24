@@ -3,7 +3,7 @@ package com.smart.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="CONTACT")
+@Table(name = "CONTACT")
 public class Contact {
 
     @Id
@@ -21,6 +21,10 @@ public class Contact {
 
     @ManyToOne
     private User user;
+    private String image;
+
+    public Contact() {
+    }
 
     public int getcId() {
         return cId;
@@ -29,13 +33,6 @@ public class Contact {
     public void setcId(int cId) {
         this.cId = cId;
     }
-
-    private String image;
-
-    public Contact() {
-    }
-
-
 
     public String getName() {
         return name;

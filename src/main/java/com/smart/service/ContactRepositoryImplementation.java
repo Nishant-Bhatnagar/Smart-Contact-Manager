@@ -8,14 +8,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ContactRepositoryImplementation implements IContactRepositoryImplementation{
+public class ContactRepositoryImplementation implements IContactRepositoryImplementation {
 
     @Autowired
     private IContactRepository iContactRepository;
 
-    public List<Contact> getContact(){
+    public List<Contact> getContact() {
         System.out.println("Insode");
         return iContactRepository.findAll();
     }
+
 
 }
