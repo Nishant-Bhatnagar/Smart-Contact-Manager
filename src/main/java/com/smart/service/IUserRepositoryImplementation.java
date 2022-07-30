@@ -8,6 +8,8 @@ public interface IUserRepositoryImplementation {
 
     List<User> fetchUsers();
 
+    User getUserLogin(String email);
+
     String addUser(User user);
 
 }

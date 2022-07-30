@@ -3,6 +3,7 @@ package com.smart.service;
 import com.smart.model.User;
 import com.smart.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,14 +14,24 @@ public class UserRepositoryImplementation implements IUserRepositoryImplementati
     @Autowired
     private IUserRepository iUserRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     public List<User> fetchUsers() {
         return iUserRepository.findAll();
     }
 
     @Override
+    public User getUserLogin(String email) {
+
+        return iUserRepository.findByEmail(email);
+    }
+
+    @Override
     public String addUser(User user) {
+
         user.setRole("ROLE_USER");
         user.setUserActive(true);
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         iUserRepository.save(user);
         return "added successfully";
     }
