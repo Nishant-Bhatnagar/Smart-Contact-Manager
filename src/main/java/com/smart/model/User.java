@@ -1,6 +1,8 @@
 package com.smart.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +12,10 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @NotBlank(message = "Please Enter Your Name")
+    @Size(min = 2,max = 25,message = "Length Range 2 to 25")
     private String name;
+    @NotBlank(message = "Please Enter Your Email")
     @Column(unique = true)
     private String email;
     private String role;
