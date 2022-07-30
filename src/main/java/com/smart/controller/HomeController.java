@@ -4,12 +4,14 @@ import com.smart.helper.Message;
 import com.smart.model.User;
 import com.smart.service.IUserRepositoryImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @RestController
 public class HomeController {
@@ -44,11 +46,18 @@ public class HomeController {
     }
 
     @PostMapping("/do_register")
-    public ModelAndView registerUser(User user, boolean agreement, HttpSession httpSession) {
+    public ModelAndView registerUser(@Valid User user,  BindingResult result,boolean agreement, HttpSession httpSession) {
         ModelAndView modelAndView = new ModelAndView();
         try {
+            System.out.println("Errors:- " + result.toString());
             if (!agreement) {
                 throw new Exception(" Please check the box ");
+            }
+            if(result.hasErrors()) {
+                System.out.println("Errors:- " + result.toString());
+                modelAndView.addObject("user", user);
+                modelAndView.setViewName("signup");
+                return modelAndView;
             }
             String response = iUserRepositoryImplementation.addUser(user);
 
