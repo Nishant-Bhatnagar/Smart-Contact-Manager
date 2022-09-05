@@ -17,3 +17,17 @@ background: #e2e2e2!important;
     background: white;
 
 }
+
+#login .container #login-row #login-column #login-box {
+  margin-top: 120px;
+  max-width: 900px;
+  height: 370px;
+  border: 1px solid #9C9C9C;
+  background-color: #EAEAEA;
+}
+#login .container #login-row #login-column #login-box #login-form {
+  padding: 20px;
+}
+#login .container #login-row #login-column #login-box #login-form #register-link {
+  margin-top: -40px;
+}

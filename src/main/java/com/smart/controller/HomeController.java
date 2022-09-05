@@ -76,4 +76,12 @@ public class HomeController {
         return modelAndView;
 
     }
+
+    @GetMapping("/sigin")
+    public ModelAndView login() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("title", "Smart Contact Manager");
+        modelAndView.setViewName("sigin");
+        return modelAndView;
+    }
 }
