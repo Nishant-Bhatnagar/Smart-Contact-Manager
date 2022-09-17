@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IContactRepositoryImplementation {
 
-    List<Contact> getContact();
+    List<Contact> getContact(int userId);
 
 
 

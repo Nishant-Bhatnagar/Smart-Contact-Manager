@@ -21,9 +21,9 @@ public class ContactRepositoryImplementation implements IContactRepositoryImplem
     @Autowired
     private IContactRepository iContactRepository;
 
-    public List<Contact> getContact() {
-        System.out.println("Insode");
-        return iContactRepository.findAll();
+    public List<Contact> getContact(int userId) {
+
+        return iContactRepository.findByUser_Id(userId);
     }
 
 
