@@ -80,10 +80,7 @@ public class UserController {
 
             }
 
-            mv = addCommonData(principal);
-            mv.addObject("title", "Add Contact");
-            mv.addObject("contact", new Contact());
-            mv.setViewName("normal/add_contact_form");
+
 //            Success Message
             session.setAttribute("message",new Message("Your contact added !! Add more...","success"));
         } catch (Exception e) {
@@ -91,6 +88,12 @@ public class UserController {
             e.printStackTrace();
             //            Error Message
             session.setAttribute("message",new Message("Something went wrong !! Try again...","danger"));
+        }
+        finally{
+            mv = addCommonData(principal);
+            mv.addObject("title", "Add Contact");
+            mv.addObject("contact", new Contact());
+            mv.setViewName("normal/add_contact_form");
         }
 
         return mv;
