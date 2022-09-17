@@ -20,12 +20,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
     @Autowired
     IUserRepositoryImplementation iUserRepositoryImplementation;
+
+    @Autowired
+    IContactRepositoryImplementation iContactRepositoryImplementation;
     public ModelAndView addCommonData(Principal principal)
     {
         String userName = principal.getName();
@@ -66,25 +70,14 @@ public class UserController {
              //processing and uploading file...
             contact.setImage(file.getOriginalFilename());
             iUserRepositoryImplementation.addContact(user, contact);
-            if(file.isEmpty())
+            if(!file.isEmpty())
             {
-
-            }
-            else {
-
-
                 File saveFile = new ClassPathResource("static/img").getFile();
                 Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + file.getOriginalFilename());
                 Files.copy(file.getInputStream(),path, StandardCopyOption.REPLACE_EXISTING);
                 System.out.println("Image is upload");
-
             }
-
-            mv = addCommonData(principal);
-            mv.addObject("title", "Add Contact");
-            mv.addObject("contact", new Contact());
-            mv.setViewName("normal/add_contact_form");
-//            Success Message
+// Success Message
             session.setAttribute("message",new Message("Your contact added !! Add more...","success"));
         } catch (Exception e) {
             System.out.println("Error" + e.getMessage());
@@ -92,7 +85,29 @@ public class UserController {
             //            Error Message
             session.setAttribute("message",new Message("Something went wrong !! Try again...","danger"));
         }
+        finally {
+            mv = addCommonData(principal);
+            mv.addObject("title", "Add Contact");
+            mv.addObject("contact", new Contact());
+            mv.setViewName("normal/add_contact_form");
+        }
 
+        return mv;
+    }
+
+    //show contacts handler
+
+    @GetMapping("/show-contacts")
+    public ModelAndView showContacts(Principal principal)
+    {
+        String name = principal.getName();
+        User userLogin = iUserRepositoryImplementation.getUserLogin(name);
+        List<Contact> contact = iContactRepositoryImplementation.getContact(userLogin.getId());
+        System.out.println(contact);
+        ModelAndView mv  = addCommonData(principal);
+        mv.addObject("title","Show User Contacts");
+        mv.addObject("contacts",contact);
+        mv.setViewName("normal/show_contacts");
         return mv;
     }
 }
