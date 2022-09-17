@@ -1,5 +1,6 @@
 package com.smart.controller;
 
+import com.smart.helper.Message;
 import com.smart.model.Contact;
 import com.smart.model.User;
 import com.smart.service.ContactRepositoryImplementation;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -54,7 +56,8 @@ public class UserController {
     public ModelAndView addContactToDB(
             Contact contact,
             @RequestParam("profileImage") MultipartFile file,
-            Principal principal) {
+            Principal principal,
+            HttpSession session) {
         ModelAndView mv = null;
         try {
             String name = principal.getName();
@@ -81,9 +84,13 @@ public class UserController {
             mv.addObject("title", "Add Contact");
             mv.addObject("contact", new Contact());
             mv.setViewName("normal/add_contact_form");
+//            Success Message
+            session.setAttribute("message",new Message("Your contact added !! Add more...","success"));
         } catch (Exception e) {
             System.out.println("Error" + e.getMessage());
             e.printStackTrace();
+            //            Error Message
+            session.setAttribute("message",new Message("Something went wrong !! Try again...","danger"));
         }
 
         return mv;
