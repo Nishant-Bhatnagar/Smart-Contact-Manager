@@ -42,4 +42,18 @@ public class UserController {
         mv.setViewName("normal/add_contact_form");
         return mv;
     }
+//Adding new contact to db
+    @PostMapping("/adding-contact")
+    public ModelAndView addContactToDB(Contact contact,Principal principal) {
+
+        String name = principal.getName();
+        User user = this.iUserRepositoryImplementation.getUserLogin(name);
+        iUserRepositoryImplementation.addContact(user,contact);
+        System.out.println("-----------------reaching------------------------");
+        ModelAndView mv = addCommonData(principal);
+        mv.addObject("title","Add Contact");
+        mv.addObject("contact",new Contact());
+        mv.setViewName("normal/add_contact_form");
+        return mv;
+    }
 }

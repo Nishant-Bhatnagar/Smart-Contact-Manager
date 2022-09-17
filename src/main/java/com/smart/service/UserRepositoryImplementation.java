@@ -1,5 +1,6 @@
 package com.smart.service;
 
+import com.smart.model.Contact;
 import com.smart.model.User;
 import com.smart.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,15 @@ public class UserRepositoryImplementation implements IUserRepositoryImplementati
         user.setRole("ROLE_USER");
         user.setUserActive(true);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        iUserRepository.save(user);
+        return "added successfully";
+    }
+
+    @Override
+    public String addContact(User user, Contact contact) {
+        contact.setUser(user);
+        user.getContacts().add(contact);
+//        System.out.println(contact);
         iUserRepository.save(user);
         return "added successfully";
     }
