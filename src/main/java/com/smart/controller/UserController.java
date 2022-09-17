@@ -2,14 +2,21 @@ package com.smart.controller;
 
 import com.smart.model.Contact;
 import com.smart.model.User;
+import com.smart.service.ContactRepositoryImplementation;
+import com.smart.service.IContactRepositoryImplementation;
 import com.smart.service.IUserRepositoryImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 
 @RestController
@@ -44,16 +51,41 @@ public class UserController {
     }
 //Adding new contact to db
     @PostMapping("/adding-contact")
-    public ModelAndView addContactToDB(Contact contact,Principal principal) {
+    public ModelAndView addContactToDB(
+            Contact contact,
+            @RequestParam("profileImage") MultipartFile file,
+            Principal principal) {
+        ModelAndView mv = null;
+        try {
+            String name = principal.getName();
+            User user = this.iUserRepositoryImplementation.getUserLogin(name);
 
-        String name = principal.getName();
-        User user = this.iUserRepositoryImplementation.getUserLogin(name);
-        iUserRepositoryImplementation.addContact(user,contact);
-        System.out.println("-----------------reaching------------------------");
-        ModelAndView mv = addCommonData(principal);
-        mv.addObject("title","Add Contact");
-        mv.addObject("contact",new Contact());
-        mv.setViewName("normal/add_contact_form");
+             //processing and uploading file...
+            contact.setImage(file.getOriginalFilename());
+            iUserRepositoryImplementation.addContact(user, contact);
+            if(file.isEmpty())
+            {
+
+            }
+            else {
+
+
+                File saveFile = new ClassPathResource("static/img").getFile();
+                Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + file.getOriginalFilename());
+                Files.copy(file.getInputStream(),path, StandardCopyOption.REPLACE_EXISTING);
+                System.out.println("Image is upload");
+
+            }
+
+            mv = addCommonData(principal);
+            mv.addObject("title", "Add Contact");
+            mv.addObject("contact", new Contact());
+            mv.setViewName("normal/add_contact_form");
+        } catch (Exception e) {
+            System.out.println("Error" + e.getMessage());
+            e.printStackTrace();
+        }
+
         return mv;
     }
 }
