@@ -11,11 +11,10 @@ public class Contact {
     @Column(length = 3)
     private int cId;
     private String name;
-    @Column(length = 10)
-    private int phone;
+    private String phone;
     @Column(length = 500)
     private String description;
-    private String nickName;
+    private String secondName;
     private String work;
     private String email;
 
@@ -42,11 +41,11 @@ public class Contact {
         this.name = name;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -58,12 +57,12 @@ public class Contact {
         this.description = description;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getSecondName() {
+        return secondName;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
     }
 
     public String getWork() {
@@ -85,6 +84,21 @@ public class Contact {
     public String getImage() {
         return image;
     }
+
+//    @Override
+//    public String toString() {
+//        return "Contact{" +
+//                "cId=" + cId +
+//                ", name='" + name + '\'' +
+//                ", phone=" + phone +
+//                ", description='" + description + '\'' +
+//                ", secondName='" + secondName + '\'' +
+//                ", work='" + work + '\'' +
+//                ", email='" + email + '\'' +
+//                ", user=" + user +
+//                ", image='" + image + '\'' +
+//                '}';
+//    }
 
     public void setImage(String image) {
         this.image = image;
