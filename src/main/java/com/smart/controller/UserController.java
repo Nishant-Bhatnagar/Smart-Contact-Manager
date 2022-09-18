@@ -113,7 +113,6 @@ public class UserController {
         String name = principal.getName();
         User userLogin = iUserRepositoryImplementation.getUserLogin(name);
         Page<Contact> contact = iContactRepositoryImplementation.getContact(userLogin.getId(), page);
-        System.out.println(contact);
         ModelAndView mv  = addCommonData(principal);
         mv.addObject("title","Show User Contacts");
         mv.addObject("contacts",contact);
@@ -127,14 +126,16 @@ public class UserController {
     @GetMapping("/{cId}/contact")
     public ModelAndView showContactsDetails(@PathVariable("cId") Integer cId, Principal principal)
     {
-
-
         Contact contactDetail = iContactRepositoryImplementation.getContactDetail(cId);
         ModelAndView mv  = addCommonData(principal);
+        User user = (User) mv.getModel().get("user");
+        if(user.getId() == contactDetail.getUser().getId())
+        {
+            mv.addObject("contact",contactDetail);
+        }
         mv.addObject("title","Show User Contacts");
-        mv.addObject("contact",contactDetail);
-        System.out.println(contactDetail);
         mv.setViewName("normal/contact_detail");
+
         return mv;
     }
 
