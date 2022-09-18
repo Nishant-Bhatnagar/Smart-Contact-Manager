@@ -12,5 +12,6 @@ public interface IContactRepositoryImplementation {
     Page<Contact> getContact(int userId, int page);
     Contact getContactDetail(int cId);
 
+    void deleteContactDetails(int cId);
 
 }

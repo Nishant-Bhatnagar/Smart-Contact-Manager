@@ -34,6 +34,11 @@ public class ContactRepositoryImplementation implements IContactRepositoryImplem
         return iContactRepository.findById(cId);
     }
 
+    @Override
+    public void deleteContactDetails(int cId) {
+        iContactRepository.deleteById(cId);
+
+    }
 
 
 }

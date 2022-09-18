@@ -139,4 +139,26 @@ public class UserController {
         return mv;
     }
 
+    @GetMapping("/delete/{cId}")
+    public ModelAndView deleteContact(@PathVariable("cId") Integer cId,Principal principal,HttpSession session)
+    {
+
+        Contact contactDetail = iContactRepositoryImplementation.getContactDetail(cId);
+        ModelAndView mv  = addCommonData(principal);
+        User user = (User) mv.getModel().get("user");
+
+        if(user.getId() == contactDetail.getUser().getId())
+
+        {
+
+            contactDetail.setUser(null);
+            iContactRepositoryImplementation.deleteContactDetails(cId);
+            session.setAttribute("message", new Message("Contact deleted succesfully...","success"));
+        }
+
+        return new ModelAndView("redirect:/user/show-contacts/0");
+
+
+    }
+
 }
