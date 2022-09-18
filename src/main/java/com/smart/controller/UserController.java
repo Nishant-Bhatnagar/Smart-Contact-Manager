@@ -139,6 +139,7 @@ public class UserController {
         return mv;
     }
 
+//    Deleting the contact id
     @GetMapping("/delete/{cId}")
     public ModelAndView deleteContact(@PathVariable("cId") Integer cId,Principal principal,HttpSession session)
     {
@@ -160,5 +161,22 @@ public class UserController {
 
 
     }
+
+//    Open update from handler
+    @PostMapping("/update-contact/{cId}")
+    public ModelAndView updateForm(@PathVariable("cId") Integer cId,Principal principal) {
+        Contact contactDetail = iContactRepositoryImplementation.getContactDetail(cId);
+        ModelAndView mv  = addCommonData(principal);
+        mv.addObject("contact",contactDetail);
+        mv.setViewName("normal/update_form");
+        return mv;
+    }
+
+//    Update the contact details in DB
+//    @PostMapping("/process-update")
+//    public ModelAndView updateContact(Principal principal) {
+//
+//
+//    }
 
 }
