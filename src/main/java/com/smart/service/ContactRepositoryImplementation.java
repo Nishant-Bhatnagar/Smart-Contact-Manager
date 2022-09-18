@@ -4,6 +4,9 @@ import com.smart.model.Contact;
 import com.smart.repository.IContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,9 +24,14 @@ public class ContactRepositoryImplementation implements IContactRepositoryImplem
     @Autowired
     private IContactRepository iContactRepository;
 
-    public List<Contact> getContact() {
-        System.out.println("Insode");
-        return iContactRepository.findAll();
+    public Page<Contact> getContact(int userId, int page) {
+
+        Pageable pageable = PageRequest.of(page,5);
+        return iContactRepository.findByUser_Id(userId,pageable);
+    }
+
+    public Contact getContactDetail(int cId){
+        return iContactRepository.findById(cId);
     }
 
 
