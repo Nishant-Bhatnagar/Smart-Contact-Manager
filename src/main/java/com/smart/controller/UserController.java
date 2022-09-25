@@ -173,10 +173,45 @@ public class UserController {
     }
 
 //    Update the contact details in DB
-//    @PostMapping("/process-update")
-//    public ModelAndView updateContact(Principal principal) {
-//
-//
-//    }
+    @PostMapping("/process-update")
+    public ModelAndView updateContact(Principal principal,Contact contact,@RequestParam("profileImage") MultipartFile file,HttpSession session) {
+        ModelAndView mv;
+        try {
+            mv = null;
+            System.out.println(contact.toString());
+            String userName = principal.getName();
+            User user = iUserRepositoryImplementation.getUserLogin(userName);
+            String image = iContactRepositoryImplementation.getContactDetail(contact.getcId()).getImage();
+            if (!file.isEmpty()) {
+                File deleteFile = new ClassPathResource("static/img").getFile();
+                File file1 = new File(deleteFile, image);
+                file1.delete();
+                contact.setImage(file.getOriginalFilename());
+                iUserRepositoryImplementation.addContact(user, contact);
+                File saveFile = new ClassPathResource("static/img").getFile();
+                Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + file.getOriginalFilename());
+                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+                System.out.println("Image is upload");
+            } else {
+                contact.setImage(image);
+                iUserRepositoryImplementation.addContact(user, contact);
+            }
+            session.setAttribute("message", new Message("Your contact was updated", "success"));
+        } catch (Exception e) {
+            System.out.println("Error" + e.getMessage());
+            e.printStackTrace();
+            //            Error Message
+            session.setAttribute("message", new Message("Something went wrong !! Try again...", "danger"));
+        } finally {
+
+            mv = addCommonData(principal);
+            mv.addObject("title","User DashBoard");
+            mv.setViewName("normal/user_dashboard");
+        }
+
+        return mv;
+
+
+    }
 
 }
