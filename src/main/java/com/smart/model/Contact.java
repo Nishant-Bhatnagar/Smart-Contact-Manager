@@ -85,20 +85,20 @@ public class Contact {
         return image;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Contact{" +
-//                "cId=" + cId +
-//                ", name='" + name + '\'' +
-//                ", phone=" + phone +
-//                ", description='" + description + '\'' +
-//                ", secondName='" + secondName + '\'' +
-//                ", work='" + work + '\'' +
-//                ", email='" + email + '\'' +
-//                ", user=" + user +
-//                ", image='" + image + '\'' +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "cId=" + cId +
+                ", name='" + name + '\'' +
+                ", phone=" + phone +
+                ", description='" + description + '\'' +
+                ", secondName='" + secondName + '\'' +
+                ", work='" + work + '\'' +
+                ", email='" + email + '\'' +
+                ", user=" + user +
+                ", image='" + image + '\'' +
+                '}';
+    }
 
     public void setImage(String image) {
         this.image = image;
