@@ -214,4 +214,12 @@ public class UserController {
 
     }
 
+    @GetMapping("/profile")
+    public ModelAndView profileView(Principal principal){
+        ModelAndView mv = addCommonData(principal);
+        mv.addObject("title","Profile");
+        mv.setViewName("normal/profile");
+        return  mv;
+    }
+
 }
