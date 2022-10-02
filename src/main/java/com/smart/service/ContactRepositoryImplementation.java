@@ -1,12 +1,14 @@
 package com.smart.service;
 
 import com.smart.model.Contact;
+import com.smart.model.User;
 import com.smart.repository.IContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,6 +40,11 @@ public class ContactRepositoryImplementation implements IContactRepositoryImplem
     public void deleteContactDetails(int cId) {
         iContactRepository.deleteById(cId);
 
+    }
+
+    @Override
+    public List<Contact> getSearchItems(String query, User user) {
+        return iContactRepository.findByNameContainingAndUser(query, user);
     }
 
 

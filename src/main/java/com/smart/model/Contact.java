@@ -1,5 +1,7 @@
 package com.smart.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -19,6 +21,7 @@ public class Contact {
     private String email;
 
     @ManyToOne
+    @JsonIgnore
     private User user;
     private String image;
 
